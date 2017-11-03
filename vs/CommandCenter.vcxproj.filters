@@ -116,7 +116,7 @@
     <ClCompile Include="..\src\SquadOrder.cpp">
       <Filter>micro</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\fight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\BotAssert.h">

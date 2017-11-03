@@ -9,8 +9,48 @@
 #include "sc2utils/sc2_manage_process.h"
 #include "sc2api/sc2_api.h"
 
-int main(int argc, char* argv[]) 
+std::string get_race(const std::string bot_json_path)
 {
+	rapidjson::Document doc;
+	std::string config = JSONTools::ReadFile(bot_json_path);
+	if (config.length() == 0)
+	{
+		std::cerr << "Config file could not be found, and is required for starting the bot\n";
+		std::cerr << "Please read the instructions and try again\n";
+		exit(-1);
+	}
+
+	bool parsingFailed = doc.Parse(config.c_str()).HasParseError();
+	if (parsingFailed)
+	{
+		std::cerr << "Config file could not be parsed, and is required for starting the bot\n";
+		std::cerr << "Please read the instructions and try again\n";
+		exit(-1);
+	}
+
+	std::string bot_race;
+
+	if (doc.HasMember("SC2API") && doc["SC2API"].IsObject())
+	{
+		const rapidjson::Value & info = doc["SC2API"];
+		JSONTools::ReadString("BotRace", info, bot_race);
+	}
+	else
+	{
+		std::cerr << "Config file has no 'Game Info' object, required for starting the bot\n";
+		std::cerr << "Please read the instructions and try again\n";
+		exit(-1);
+	}
+	return bot_race;
+}
+
+int fight(char* sc2_path, std::string botA_path, std::string botB_path) 
+{
+	int argc = 3;
+	char* argv[3];
+	argv[0] = "CommandCenter";
+	argv[1] = "-e";
+	argv[2] = sc2_path;
     sc2::Coordinator coordinator;
     if (!coordinator.LoadSettings(argc, argv)) 
     {
@@ -35,20 +75,15 @@ int main(int argc, char* argv[])
         exit(-1);
     }
 
-    std::string botRaceString;
-    std::string enemyRaceString;
+    
     std::string mapString;
     int stepSize = 1;
-    sc2::Difficulty enemyDifficulty = sc2::Difficulty::Easy;
 
     if (doc.HasMember("SC2API") && doc["SC2API"].IsObject())
     {
         const rapidjson::Value & info = doc["SC2API"];
-        JSONTools::ReadString("BotRace", info, botRaceString);
-        JSONTools::ReadString("EnemyRace", info, enemyRaceString);
         JSONTools::ReadString("MapFile", info, mapString);
         JSONTools::ReadInt("StepSize", info, stepSize);
-        JSONTools::ReadInt("EnemyDifficulty", info, enemyDifficulty);
     }
     else
     {
@@ -56,9 +91,13 @@ int main(int argc, char* argv[])
         std::cerr << "Please read the instructions and try again\n";
         exit(-1);
     }
+	// read the bot race
+	std::string botA_race = get_race(botA_path);
+	std::string botB_race = get_race(botB_path);
 
     // Add the custom bot, it will control the players.
-    CCBot bot("BotConfig.txt");
+    CCBot botA(botA_path);
+	CCBot botB(botB_path);
 
     
     // WARNING: Bot logic has not been thorougly tested on step sizes > 1
@@ -68,8 +107,8 @@ int main(int argc, char* argv[])
     coordinator.SetRealtime(false);
 
     coordinator.SetParticipants({
-        sc2::CreateParticipant(Util::GetRaceFromString(botRaceString), &bot),
-        sc2::CreateComputer(Util::GetRaceFromString(enemyRaceString), enemyDifficulty)
+        sc2::CreateParticipant(Util::GetRaceFromString(botA_race), &botA),
+        sc2::CreateParticipant(Util::GetRaceFromString(botB_race), &botB)
     });
 
     // Start the game.

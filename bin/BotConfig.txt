@@ -6,18 +6,10 @@
         "PrintInfoOnStart"          : false
     },
 
-    "BWAPI" : 
-    {
-        "SetLocalSpeed"             : 5,
-        "SetFrameSkip"              : 0,
-        "UserInput"                 : true,
-        "CompleteMapInformation"    : false
-    },
     
     "SC2API" :
     {
         "BotRace"                   : "Zerg",
-        "EnemyDifficulty"           : 2,
         "EnemyRace"                 : "Random",
         "MapFile"                   : "InterloperLE.SC2Map",
         "StepSize"                  : 1
