@@ -3,7 +3,7 @@
 #include "rapidjson/document.h"
 #include "JSONTools.h"
 #include "Util.h"
-
+#include "fight.h"
 #ifdef SC2API
 
 #include "sc2utils/sc2_manage_process.h"

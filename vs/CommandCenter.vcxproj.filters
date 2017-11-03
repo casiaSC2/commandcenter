@@ -225,5 +225,6 @@
       <Filter>micro</Filter>
     </ClInclude>
     <ClInclude Include="..\src\match.h" />
+    <ClInclude Include="..\src\fight.h" />
   </ItemGroup>
 </Project>
