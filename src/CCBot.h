@@ -41,7 +41,7 @@ class CCBot
 
 public:
 
-    CCBot();
+    CCBot(std::string);
 
 #ifdef SC2API
     void OnGameStart() override;

@@ -1,7 +1,7 @@
 #include "CCBot.h"
 #include "Util.h"
 
-CCBot::CCBot()
+CCBot::CCBot(std::string config_file)
     : m_map(*this)
     , m_bases(*this)
     , m_unitInfo(*this)
@@ -9,6 +9,7 @@ CCBot::CCBot()
     , m_gameCommander(*this)
     , m_strategy(*this)
     , m_techTree(*this)
+	, m_config(config_file)
 {
     
 }
