@@ -73,7 +73,7 @@ int fight(char* sc2_path, std::string botA_path, std::string botB_path, std::str
     //          The bot may crash or do unexpected things if its logic is not called every frame
     coordinator.SetStepSize(1);
     coordinator.SetRealtime(false);
-	coordinator.SetReplayPath("D:\\StarcraftAI\\replays");
+	coordinator.SetReplayPath("D:\\temp");
 
     coordinator.SetParticipants({
         sc2::CreateParticipant(Util::GetRaceFromString(botA_race), &botA),
