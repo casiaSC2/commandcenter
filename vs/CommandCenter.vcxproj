@@ -36,6 +36,7 @@
     <ClCompile Include="..\src\JSONTools.cpp" />
     <ClCompile Include="..\src\fight.cpp" />
     <ClCompile Include="..\src\MapTools.cpp" />
+    <ClCompile Include="..\src\match.c" />
     <ClCompile Include="..\src\MeleeManager.cpp" />
     <ClCompile Include="..\src\MetaType.cpp" />
     <ClCompile Include="..\src\MicroManager.cpp" />
@@ -73,6 +74,7 @@
     <ClInclude Include="..\src\GameCommander.h" />
     <ClInclude Include="..\src\JSONTools.h" />
     <ClInclude Include="..\src\MapTools.h" />
+    <ClInclude Include="..\src\match.h" />
     <ClInclude Include="..\src\MeleeManager.h" />
     <ClInclude Include="..\src\MetaType.h" />
     <ClInclude Include="..\src\MicroManager.h" />
@@ -158,7 +160,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LibraryPath>D:\StarcraftAI\SC2API_Binary_vs2017\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\StarcraftAI\SC2API_Binary_vs2017\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files\Java\jdk1.8.0_151\include\win32;C:\Program Files\Java\jdk1.8.0_151\include;D:\StarcraftAI\SC2API_Binary_vs2017\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LibraryPath>D:\StarcraftAI\SC2API_Binary_vs2017\lib;$(LibraryPath)</LibraryPath>

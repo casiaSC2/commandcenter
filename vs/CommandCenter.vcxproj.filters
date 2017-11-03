@@ -117,6 +117,7 @@
       <Filter>micro</Filter>
     </ClCompile>
     <ClCompile Include="..\src\fight.cpp" />
+    <ClCompile Include="..\src\match.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\BotAssert.h">
@@ -223,5 +224,6 @@
     <ClInclude Include="..\src\SquadOrder.h">
       <Filter>micro</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\match.h" />
   </ItemGroup>
 </Project>
