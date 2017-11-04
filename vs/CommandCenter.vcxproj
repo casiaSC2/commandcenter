@@ -98,7 +98,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGUID>{D4AC5062-8BEA-46D8-9231-57241C214F1C}</ProjectGUID>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <Keyword>Win32Proj</Keyword>
     <Platform>x64</Platform>
     <ProjectName>CommandCenter</ProjectName>
@@ -112,7 +112,7 @@
     <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v141</PlatformToolset>
@@ -141,9 +141,9 @@
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)/../bin/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SolutionName)\$(Platform)\$(Configuration)\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectName)</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)_BWAPI_d</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectName)</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.dll</TargetExt>
-    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.exe</TargetExt>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.dll</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
@@ -160,12 +160,12 @@
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LibraryPath>D:\StarcraftAI\SC2API_Binary_vs2017\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>C:\Program Files\Java\jdk1.8.0_151\include\win32;C:\Program Files\Java\jdk1.8.0_151\include;D:\StarcraftAI\SC2API_Binary_vs2017\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\starcraftAI\s2client-api\build\bin;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\DevelopmentTools\java8\include;E:\DevelopmentTools\java8\include\win32;E:\starcraftAI\s2client-api\contrib\protobuf\src;E:\starcraftAI\s2client-api\build\generated;E:\starcraftAI\s2client-api\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LibraryPath>D:\StarcraftAI\SC2API_Binary_vs2017\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>D:\StarcraftAI\SC2API_Binary_vs2017\include;$(IncludePath)</IncludePath>
+    <LibraryPath>E:\starcraftAI\SC2API_Binary_vs2017\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>E:\DevelopmentTools\java8\include\win32;E:\DevelopmentTools\java8\include;E:\starcraftAI\SC2API_Binary_vs2017\include;$(IncludePath)</IncludePath>
     <IntDir>$(SolutionName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(ProjectDir)/../bin/</OutDir>
   </PropertyGroup>

@@ -9,42 +9,9 @@
 #include "sc2utils/sc2_manage_process.h"
 #include "sc2api/sc2_api.h"
 
-std::string get_race(const std::string bot_json_path)
-{
-	rapidjson::Document doc;
-	std::string config = JSONTools::ReadFile(bot_json_path);
-	if (config.length() == 0)
-	{
-		std::cerr << "Config file could not be found, and is required for starting the bot\n";
-		std::cerr << "Please read the instructions and try again\n";
-		exit(-1);
-	}
 
-	bool parsingFailed = doc.Parse(config.c_str()).HasParseError();
-	if (parsingFailed)
-	{
-		std::cerr << "Config file could not be parsed, and is required for starting the bot\n";
-		std::cerr << "Please read the instructions and try again\n";
-		exit(-1);
-	}
-
-	std::string bot_race;
-
-	if (doc.HasMember("SC2API") && doc["SC2API"].IsObject())
-	{
-		const rapidjson::Value & info = doc["SC2API"];
-		JSONTools::ReadString("BotRace", info, bot_race);
-	}
-	else
-	{
-		std::cerr << "Config file has no 'Game Info' object, required for starting the bot\n";
-		std::cerr << "Please read the instructions and try again\n";
-		exit(-1);
-	}
-	return bot_race;
-}
-
-int fight(char* sc2_path, std::string botA_path, std::string botB_path, std::string map_string) 
+int fight(char* sc2_path, std::string botA_path, std::string botA_race, std::string botB_path, std::string botB_race,
+	std::string map_string, std::string replay_path) 
 {
 	int argc = 3;
 	char* argv[3];
@@ -55,25 +22,21 @@ int fight(char* sc2_path, std::string botA_path, std::string botB_path, std::str
     if (!coordinator.LoadSettings(argc, argv)) 
     {
         std::cout << "Unable to find or parse settings." << std::endl;
-        return 1;
+		exit(-1);
     }
     
-
-	// read the bot race
-	std::string botA_race = get_race(botA_path);
-	std::string botB_race = get_race(botB_path);
 
     // Add the custom bot, it will control the players.
     CCBot botA(botA_path);
 	CCBot botB(botB_path);
 
-    
+
     // WARNING: Bot logic has not been thorougly tested on step sizes > 1
     //          Setting this = N means the bot's onFrame gets called once every N frames
     //          The bot may crash or do unexpected things if its logic is not called every frame
     coordinator.SetStepSize(1);
     coordinator.SetRealtime(false);
-	coordinator.SetReplayPath("D:\\temp");
+	coordinator.SetReplayPath(replay_path);
 
     coordinator.SetParticipants({
         sc2::CreateParticipant(Util::GetRaceFromString(botA_race), &botA),
@@ -83,14 +46,38 @@ int fight(char* sc2_path, std::string botA_path, std::string botB_path, std::str
     // Start the game.
     coordinator.LaunchStarcraft();
     coordinator.StartGame(map_string);
-
+	// 1: botA win, 0: draw, -1: botB win
+	int match_result = 0;
     // Step forward the game simulation.
     while (true) 
     {
         coordinator.Update();
+		if(coordinator.AllGamesEnded())
+		{
+			uint32_t botA_id = botA.Observation()->GetPlayerID();
+			auto result = botA.Observation()->GetResults();
+			for(sc2::PlayerResult player_result : result)
+			{
+				if(player_result.player_id == botA_id)
+				{
+					if(player_result.result == sc2::GameResult::Win)
+					{
+						match_result = 1;
+					}else if(player_result.result == sc2::GameResult::Loss)
+					{
+						match_result = -1;
+					}else
+					{
+						match_result = 0;
+					}
+				}
+			}
+			break;
+		}
+		
     }
 
-    return 0;
+    return match_result;
 }
 
 #else
